@@ -10,7 +10,7 @@ router.get('/',isLoggedIn,viewController.getOverview );
 router.get('/tour/:slug',isLoggedIn,viewController.getTour);
 router.get('/login',isLoggedIn,viewController.getLoginForm);
 router.get('/me',protect,viewController.getAccount);
-router.get('/my-tours', /* bookingController.createBookingCheckout,protect, */ viewController.getMyTours);
+router.get('/my-tours', /* bookingController.createBookingCheckout,*/protect,  viewController.getMyTours);
 //router.post('/submit-user-data', protect, viewController.updateUserData);
 
 module.exports = router;
