@@ -23,9 +23,9 @@ I've written comments containing tips, steps and explanations about some structu
 
 <hr />
 
-!(Description 1)[issetsMd/md1.png]
-<hr />
-!(Description 2)[issetsMd/md2.png]
-<hr />
-!(Description 3)[issetsMd/md3.png]
+![Description 1](issetsMd/md1.png)
+
+![Description 2](issetsMd/md2.png)
+
+![Description 3](issetsMd/md3.png)
 
