@@ -50,7 +50,7 @@
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
   },
-  "engines":{
+  "engines": {
     "node": ">=10.0.0"
   }
 }

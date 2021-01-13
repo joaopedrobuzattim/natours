@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -28,6 +29,19 @@ app.set('views',path.join(__dirname,'views'));
 
 // 1 - GLOBAL MIDDLEWARES
 
+//Implement cors
+//Para todos os dominios: Access-Control-Allow-Origin * 
+app.use(cors());
+
+// Permitindo em dominios espedificos (ex: api e front em locais diferentes)
+// api -> api.natours.com , frontEnd -> natours.com
+// app.use(cors({ origin: 'https://www.natours.com/'  }))
+
+// Non incoming requests, ex: delete request
+// O metodo options serve para verificar se essas requisicoes sao permitidas
+app.options('*', cors());
+// Example com rota especifica
+// app.options('api/v1/tours/:id', cors());
 
 //Serving statics files
 app.use(express.static(path.join(__dirname,'public')));
