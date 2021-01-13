@@ -1,5 +1,4 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const e = require('express');
 //const APIFeatures = require('../../utils/apiFeatures');
 const Tour = require('../../models/tourModel');
 const User = require('../../models/userModel');
@@ -63,8 +62,6 @@ exports.getCheckoutSession = catchAsync(  async(req,res,next)=>{
 
     const tour = session.client_reference_id;
     const user = await User.findOne( { email: session.customer_email } )
-    console.log('Session customer_email',session.customer_email)
-    console.log(user);
     const price = session.display_items[0].amount / 100;
 
     await Booking.create({
@@ -74,13 +71,13 @@ exports.getCheckoutSession = catchAsync(  async(req,res,next)=>{
     })
  }
 
-exports.webhookCheckout = (req,res,next)=>{
+exports.webhookCheckout = (req, res, next)=>{
     const signature = req.headers['stripe-signature'];
     let event;
 
     try{
         event = stripe.webhooks
-        .constructEvents(req.body, 
+        .constructEvent(req.body, 
             signature, 
             process.env.STRIPE_WEBHOOK_SECRET);
     } catch(err){
