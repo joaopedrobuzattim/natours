@@ -19,6 +19,8 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
+app.enable('trust proxy');
+
 // Setting view Engine
 app.set('view engine','pug');
 // Set view location

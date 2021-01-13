@@ -15,7 +15,7 @@ const signToken = id =>{
     } )
 }
 
-const createAndSendToken = (user,statusCode,res)=>{
+const createAndSendToken = (user,statusCode,req,res)=>{
     const token = signToken(user._id);
 
     const cookieOptions = {
@@ -24,7 +24,10 @@ const createAndSendToken = (user,statusCode,res)=>{
         // Cookie nao pode ser modificado ou acessado atraves do Broswe
         httpOnly: true
     }
-    if(process.env.NODE_ENV === 'production')
+    /* cookieOptions.secure = true -> if the client is only to return the cookie in subsequent requests 
+    if those requests  use Secure Hypertext Transfer Protocol (HTTPS); otherwise, false. 
+    The default is false. */
+    if(req.secure || req.headers('x-forwarded-proto') === 'https')
         cookieOptions.secure = true;//Somente conexao HTTPS
     
     res.cookie('jwt', token , cookieOptions );
@@ -58,7 +61,7 @@ exports.signup = catchAsync(async (req,res,next)=>{
     // Payload (dados)
     // Secret, por seguranca, deve ser unica e ter mais de 32 charc
     // Options, exemplo: expiresIn: tempo que deve ser expirado o token
-    createAndSendToken(newUser,201,res);
+    createAndSendToken(newUser,201,req,res);
  
 })
 
@@ -81,7 +84,7 @@ exports.login = catchAsync(async (req,res,next)=>{
     }
 
     //3) If everything ok, send the token to client
-    createAndSendToken(user,200,res);
+    createAndSendToken(user,200,req,res);
 
 })
 
@@ -232,7 +235,7 @@ exports.resetPassword =  catchAsync(async(req,res,next)=>{
     //3) Update changedpasswordAt property for the users
 
     //4) Log the user in, send JWT
-    createAndSendToken(user,200,res);
+    createAndSendToken(user,200,req,res);
 
 
 })
@@ -254,5 +257,5 @@ exports.updatePassword = catchAsync(async(req,res,next) =>{
     // User.findByIdAndUpdate will not work as intended! 
 
     // 4) Log user in, send JWT
-    createAndSendToken(user,200,res);
+    createAndSendToken(user,200,req,res);
 })
