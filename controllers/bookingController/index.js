@@ -63,7 +63,7 @@ exports.getCheckoutSession = catchAsync(  async(req,res,next)=>{
 
     const tour = session.client_reference_id;
     const user = await User.findOne( { email: session.customer_email } )
-    console.log(session.customer_email)
+    console.log('Session customer_email',session.customer_email)
     console.log(user);
     const price = session.display_items[0].amount / 100;
 
