@@ -16,6 +16,7 @@ const tourRouter  = require('./routes/tourRoutes');
 const userRouter  = require('./routes/userRoutes');
 const revierRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -63,7 +64,12 @@ const limiter = rateLimit({
 })
 app.use('/api',limiter)
 
-//Body parser, reading data from body into req.body
+//Stripe webhooks
+// Os dados nao podem estar em formatos json, devem estar em formatos raw
+// express.raw converte para raw
+app.post('/webkook-checkout', express.raw({type: 'application/json'}),bookingController.webhookCheckout)
+
+//Body parser, reading data from body into req.body and convert it to json
 app.use(express.json({
     limit: '10kb' // Limitar a quantidade maxima de dados por body
 }));
