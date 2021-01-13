@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
 
@@ -67,7 +68,9 @@ app.use('/api',limiter)
 //Stripe webhooks
 // Os dados nao podem estar em formatos json, devem estar em formatos raw
 // express.raw converte para raw
-app.post('/webkook-checkout', express.raw(),bookingController.webhookCheckout)
+app.post('/webhook-checkout',
+bodyParser.raw({ type: 'application/json' }),
+bookingController.webhookCheckout)
 
 //Body parser, reading data from body into req.body and convert it to json
 app.use(express.json({
