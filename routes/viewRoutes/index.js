@@ -5,6 +5,8 @@ const bookingController = require('../../controllers/bookingController');
 
 const router = express.Router();
 
+//Pega os parametros alert das query strings e salva em response.locals
+router.use(viewController.alerts)
 
 router.get('/',isLoggedIn,viewController.getOverview );
 router.get('/tour/:slug',isLoggedIn,viewController.getTour);

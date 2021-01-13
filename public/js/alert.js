@@ -6,7 +6,7 @@ export const hiddeAlert = () => {
 }
 
 //type is 'success' or 'error'
-export const showAlert = (type,msg) =>{
+export const showAlert = (type,msg, time = 7) =>{
 
     hiddeAlert();
 
@@ -14,5 +14,5 @@ export const showAlert = (type,msg) =>{
     // INSERIR NO COMEÇO DO BODY
     document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
 
-    window.setTimeout(hiddeAlert, 5000)
+    window.setTimeout(hiddeAlert, time * 1000);
 }
