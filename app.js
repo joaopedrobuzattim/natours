@@ -67,7 +67,7 @@ app.use('/api',limiter)
 //Stripe webhooks
 // Os dados nao podem estar em formatos json, devem estar em formatos raw
 // express.raw converte para raw
-app.post('/webkook-checkout', express.raw({type: 'application/json'}),bookingController.webhookCheckout)
+app.post('/webkook-checkout', express.raw(),bookingController.webhookCheckout)
 
 //Body parser, reading data from body into req.body and convert it to json
 app.use(express.json({
